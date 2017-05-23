@@ -1,5 +1,7 @@
 import XCTest
-@testable import fluent_validatorsTests
+@testable import FluentValidatorsTests
 
 XCTMain([
+    testCase(ExistsTests.allTests),
+    testCase(UniqueFieldTests.allTests),
 ])

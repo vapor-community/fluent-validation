@@ -5,6 +5,15 @@ import Fluent
 @testable import FluentValidators
 
 class UniqueFieldTests: XCTestCase {
+    static var allTests = [
+        ("testBasic", testBasic),
+        ("testBasicFailed", testBasicFailed),
+        ("testColumnAndInputsCountMismatch", testColumnAndInputsCountMismatch),
+        ("testMultipleColumns", testMultipleColumns),
+        ("testMultipleColumnsFailed", testMultipleColumnsFailed),
+        ("testOneColumnFailsBoth", testOneColumnFailsBoth),
+    ]
+
     override func setUp() {
         MockUser.database = Database(MockDriver())
     }

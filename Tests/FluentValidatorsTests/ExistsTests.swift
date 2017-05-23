@@ -5,6 +5,11 @@ import Validation
 @testable import FluentValidators
 
 class ExistsTests: XCTestCase {
+    static var allTests = [
+        ("testBasic", testBasic),
+        ("testBasicFailed", testBasicFailed)
+    ]
+
     override func setUp() {
         MockUser.database = Database(MockDriver())
     }
