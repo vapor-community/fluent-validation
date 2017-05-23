@@ -14,7 +14,7 @@ public struct Exists<T>: Validator where T: Entity {
     
     public func validate(_ input: Node) throws {
         do {
-            let query = try T.query().filter(column, input)
+            let query = try T.makeQuery().filter(column, input)
             try filters?(query)
             
             guard try query.first() != nil else {
