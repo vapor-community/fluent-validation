@@ -37,7 +37,7 @@ public struct UniqueField<T>: Validator where T: Entity {
                 throw error("Expected input for columns \(columns), got only \(inputs.count) inputs")
             }
             
-            let query = try T.query()
+            let query = try T.makeQuery()
             
             for (column, input) in zip(columns, inputs) {
                 try query.filter(column, input)

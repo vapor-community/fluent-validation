@@ -7,16 +7,18 @@ internal class MockDriver: Driver {
     
     let idType: IdentifierType = .int
     let keyNamingConvention: KeyNamingConvention = .snake_case
-    
-    func makeConnection() throws -> Connection {
+    var queryLogger: QueryLogger? = nil
+
+    func makeConnection(_ type: ConnectionType) throws -> Connection {
         return DummyConnection()
     }
 }
 
 internal class DummyConnection: Connection {
     var isClosed = false
-    
-    func query<E>(_ query: Query<E>) throws -> Node where E : Entity {
+    var queryLogger: QueryLogger? = nil
+
+    func query<E>(_ query: RawOr<Query<E>>) throws -> Node where E : Entity {
         let existingEmails: [Node] = [
             .string("jim@test.com"),
             .string("tim@test.com"),
@@ -43,12 +45,12 @@ internal class DummyConnection: Connection {
                 "username": existingUsernames[2]
                 ])
             ])
-        
-        guard query.filters.count >= 1 else {
+
+        guard let filters = query.wrapped?.filters, filters.count >= 1 else {
             return fullResult
         }
-        
-        for filter in query.filters {
+
+        for filter in filters {
             switch filter {
             case .some(let filter):
                 switch filter.method {
